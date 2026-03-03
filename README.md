@@ -38,10 +38,10 @@ You can install this plugin directly from within Obsidian:
 If you prefer to install manually via GitHub:
 1. Go to your vault's plugin directory: `.obsidian/plugins/` (note: `.obsidian` is a hidden folder).
 2. Create a folder named `daily-notes-but-better`.
+3. Clone or download this repository, and copy `main.js`, `manifest.json`, and `styles.css` into the folder. Alternatively, use `git clone https://github.com/Antigravity/daily-notes-but-better.git` in the plugins directory and make sure the folder name exactly matches the ID (`daily-notes-but-better`).
 4. Open Obsidian and go to **Settings** -> **Community Plugins**.
 5. Refresh the installed plugins list.
 6. Find **Daily Notes But Better** and toggle it ON.
-Alternatively, use `git clone https://github.com/g0dwyn/daily-notes-but-better.git` in the plugins directory and make sure the folder name exactly matches the ID (`daily-notes-but-better`).
 
 ## Configuration
 Go to the plugin's Options. You will see a **Log Mode** dropdown:
