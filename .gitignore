@@ -1,0 +1,8 @@
+node_modules/
+*.js
+!esbuild.config.mjs
+main.js
+dist/
+.DS_Store
+.obsidian/
+data.json
