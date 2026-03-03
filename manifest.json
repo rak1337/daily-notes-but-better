@@ -1,0 +1,10 @@
+{
+    "id": "daily-notes-but-better",
+    "name": "Daily Notes But Better",
+    "version": "1.0.0",
+    "minAppVersion": "1.0.0",
+    "description": "All the calendar, none of the clutter. A beautiful Calendar view to manage daily entries in one master file",
+    "author": "Antigravity",
+    "authorUrl": "",
+    "isDesktopOnly": false
+}

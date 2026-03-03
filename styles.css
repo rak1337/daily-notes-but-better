@@ -1,0 +1,82 @@
+.udc-view-container {
+    padding: 10px;
+}
+
+.udc-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.udc-title {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.udc-nav-btn {
+    background: transparent;
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 4px;
+    padding: 4px 10px;
+    cursor: pointer;
+    color: var(--text-normal);
+}
+
+.udc-nav-btn:hover {
+    background: var(--background-modifier-hover);
+}
+
+.udc-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    text-align: center;
+}
+
+.udc-day-header {
+    font-size: 0.8em;
+    font-weight: 600;
+    color: var(--text-muted);
+    padding-bottom: 5px;
+}
+
+.udc-cell {
+    padding: 8px 0;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+    border: 1px solid transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+    position: relative;
+}
+
+.udc-cell.date-cell:hover {
+    background-color: var(--background-modifier-hover);
+}
+
+.udc-cell.is-today {
+    color: var(--text-on-accent);
+    background-color: var(--interactive-accent);
+    font-weight: bold;
+}
+
+.udc-cell.empty {
+    cursor: default;
+}
+
+.udc-dot {
+    width: 4px;
+    height: 4px;
+    background-color: var(--interactive-accent);
+    border-radius: 50%;
+    margin-top: 2px;
+}
+
+.udc-cell.is-today .udc-dot {
+    background-color: var(--text-on-accent);
+}
