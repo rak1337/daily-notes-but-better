@@ -1,11 +1,11 @@
-import { ItemView, WorkspaceLeaf, TFile, normalizePath } from 'obsidian';
+import { ItemView, WorkspaceLeaf, TFile, TFolder, normalizePath, moment } from 'obsidian';
 import DailyNotesButBetterPlugin from './main';
 
 export const VIEW_TYPE_CALENDAR = "daily-notes-but-better-view";
 
 export class CalendarView extends ItemView {
     plugin: DailyNotesButBetterPlugin;
-    currentDate: any;
+    currentDate: moment.Moment;
     existingDates: Set<string> = new Set();
 
     constructor(leaf: WorkspaceLeaf, plugin: DailyNotesButBetterPlugin) {
@@ -60,7 +60,7 @@ export class CalendarView extends ItemView {
         } else {
             const folderPath = normalizePath(this.plugin.settings.multiModeFolder);
             const folder = this.app.vault.getAbstractFileByPath(folderPath);
-            if (folder && folder.children) {
+            if (folder instanceof TFolder) {
                 // Extract dates from file names
                 for (const file of folder.children) {
                     if (file instanceof TFile && file.extension === 'md') {
@@ -141,7 +141,7 @@ export class CalendarView extends ItemView {
             }
 
             cell.addEventListener('click', () => {
-                this.plugin.handleDateClick(dateObj);
+                void this.plugin.handleDateClick(dateObj);
             });
         }
     }

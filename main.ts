@@ -1,24 +1,24 @@
-import { Plugin, TFile, Notice, MarkdownView, normalizePath } from 'obsidian';
+import { Plugin, TFile, Notice, MarkdownView, normalizePath, moment } from 'obsidian';
 import { DailyNotesButBetterSettings, DEFAULT_SETTINGS } from './types';
 import { DailyNotesButBetterSettingTab } from './settings';
 import { CalendarView, VIEW_TYPE_CALENDAR } from './calendar';
 
 export default class DailyNotesButBetterPlugin extends Plugin {
-    settings: DailyNotesButBetterSettings;
+    settings!: DailyNotesButBetterSettings;
 
     async onload() {
         await this.loadSettings();
 
         this.registerView(VIEW_TYPE_CALENDAR, (leaf) => new CalendarView(leaf, this));
 
-        this.addRibbonIcon('calendar-days', 'Open Daily Notes But Better', () => {
-            this.activateView();
+        this.addRibbonIcon('calendar-days', 'Open daily notes but better', () => {
+            void this.activateView();
         });
 
         this.addCommand({
-            id: 'open-daily-notes-but-better',
-            name: 'Open Calendar View',
-            callback: () => { this.activateView(); }
+            id: 'open',
+            name: 'Open calendar view',
+            callback: () => { void this.activateView(); }
         });
 
         this.addSettingTab(new DailyNotesButBetterSettingTab(this.app, this));
@@ -26,12 +26,17 @@ export default class DailyNotesButBetterPlugin extends Plugin {
 
     async activateView() {
         this.app.workspace.detachLeavesOfType(VIEW_TYPE_CALENDAR);
-        await this.app.workspace.getRightLeaf(false).setViewState({ type: VIEW_TYPE_CALENDAR, active: true });
-        this.app.workspace.revealLeaf(this.app.workspace.getLeavesOfType(VIEW_TYPE_CALENDAR)[0]);
+        const leaf = this.app.workspace.getRightLeaf(false);
+        if (leaf) {
+            await leaf.setViewState({ type: VIEW_TYPE_CALENDAR, active: true });
+            const calendarLeaves = this.app.workspace.getLeavesOfType(VIEW_TYPE_CALENDAR);
+            if (calendarLeaves.length > 0) {
+                this.app.workspace.revealLeaf(calendarLeaves[0]);
+            }
+        }
     }
 
     onunload() {
-        this.app.workspace.detachLeavesOfType(VIEW_TYPE_CALENDAR);
     }
 
     async loadSettings() {
@@ -49,7 +54,7 @@ export default class DailyNotesButBetterPlugin extends Plugin {
         }
     }
 
-    async handleDateClick(dateObj: any) {
+    async handleDateClick(dateObj: moment.Moment) {
         if (this.settings.logMode === 'single') {
             await this.handleSingleFileMode(dateObj);
         } else {
@@ -57,7 +62,7 @@ export default class DailyNotesButBetterPlugin extends Plugin {
         }
     }
 
-    async handleMultiFileMode(dateObj: any) {
+    async handleMultiFileMode(dateObj: moment.Moment) {
         const folderPath = this.settings.multiModeFolder;
         const fileName = dateObj.format(this.settings.multiModeFormat) + ".md";
         const fullPath = normalizePath(`${folderPath}/${fileName}`);
@@ -95,13 +100,14 @@ export default class DailyNotesButBetterPlugin extends Plugin {
                     editor.setCursor({ line: lastLine, ch: editor.getLine(lastLine).length });
                     editor.focus();
                 }
-            } catch (e: any) {
-                new Notice("Error creating daily note: " + e.message);
+            } catch (e) {
+                const errorMessage = e instanceof Error ? e.message : String(e);
+                new Notice("Error creating daily note: " + errorMessage);
             }
         }
     }
 
-    async handleSingleFileMode(dateObj: any) {
+    async handleSingleFileMode(dateObj: moment.Moment) {
         const filePath = normalizePath(this.settings.targetFilePath);
         const abstractFile = this.app.vault.getAbstractFileByPath(filePath);
 
@@ -110,7 +116,7 @@ export default class DailyNotesButBetterPlugin extends Plugin {
             return;
         }
 
-        const targetFile = abstractFile as TFile;
+        const targetFile = abstractFile;
         const fileContent = await this.app.vault.read(targetFile);
 
         // Explicit format we use for tracking dots

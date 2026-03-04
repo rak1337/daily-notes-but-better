@@ -12,27 +12,27 @@ export class DailyNotesButBetterSettingTab extends PluginSettingTab {
     display(): void {
         const { containerEl } = this;
         containerEl.empty();
-        containerEl.createEl('h2', { text: 'Daily Notes But Better Settings' });
+        new Setting(containerEl).setName('Daily notes but better settings').setHeading();
 
         new Setting(containerEl)
-            .setName('Log Mode')
+            .setName('Log mode')
             .setDesc('How should calendar clicks interact with your vault?')
             .addDropdown(dropdown => dropdown
-                .addOption('single', 'Single Master File')
-                .addOption('multi', 'One File Per Day')
+                .addOption('single', 'Single master file')
+                .addOption('multi', 'One file per day')
                 .setValue(this.plugin.settings.logMode)
-                .onChange(async (value: 'single' | 'multi') => {
-                    this.plugin.settings.logMode = value;
+                .onChange(async (value: string) => {
+                    this.plugin.settings.logMode = value as 'single' | 'multi';
                     await this.plugin.saveSettings();
                     this.display();
                 })
             );
 
         if (this.plugin.settings.logMode === 'single') {
-            containerEl.createEl('h3', { text: 'Single Master File Settings' });
+            new Setting(containerEl).setName('Single master file settings').setHeading();
 
             new Setting(containerEl)
-                .setName('Target Master File Path')
+                .setName('Target master file path')
                 .setDesc('Path to the single master file (e.g. 02 Personal/Log/Daily Log.md)')
                 .addText(text => text
                     .setPlaceholder('02 Personal/Log/Daily Log.md')
@@ -43,7 +43,7 @@ export class DailyNotesButBetterSettingTab extends PluginSettingTab {
                     }));
 
             new Setting(containerEl)
-                .setName('Header Date Format')
+                .setName('Header date format')
                 .setDesc('Moment format for injected header strings')
                 .addText(text => text
                     .setPlaceholder('YYYY-MM-DD - dddd, MMMM D, YYYY')
@@ -54,7 +54,7 @@ export class DailyNotesButBetterSettingTab extends PluginSettingTab {
                     }));
 
             new Setting(containerEl)
-                .setName('Template File Path')
+                .setName('Template file path')
                 .setDesc('Optional template to duplicate under the new header when inserted')
                 .addText(text => text
                     .setPlaceholder('02 Personal/Templates/Daily.md')
@@ -64,10 +64,10 @@ export class DailyNotesButBetterSettingTab extends PluginSettingTab {
                         await this.plugin.saveSettings();
                     }));
         } else {
-            containerEl.createEl('h3', { text: 'One File Per Day Settings' });
+            new Setting(containerEl).setName('One file per day settings').setHeading();
 
             new Setting(containerEl)
-                .setName('Daily Logs Folder')
+                .setName('Daily logs folder')
                 .setDesc('Folder where daily files are created')
                 .addText(text => text
                     .setPlaceholder('02 Personal/Log')
@@ -78,7 +78,7 @@ export class DailyNotesButBetterSettingTab extends PluginSettingTab {
                     }));
 
             new Setting(containerEl)
-                .setName('Daily Note File Format')
+                .setName('Daily note file format')
                 .setDesc('Moment format for the file name (e.g. YYYY-MM-DD)')
                 .addText(text => text
                     .setPlaceholder('YYYY-MM-DD')
@@ -89,7 +89,7 @@ export class DailyNotesButBetterSettingTab extends PluginSettingTab {
                     }));
 
             new Setting(containerEl)
-                .setName('Template File Path')
+                .setName('Template file path')
                 .setDesc('Path to the template for new daily notes')
                 .addText(text => text
                     .setPlaceholder('02 Personal/Templates/Daily.md')
