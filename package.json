@@ -1,7 +1,7 @@
 {
     "name": "daily-notes-but-better",
     "version": "1.0.0",
-    "description": "All the calendar, none of the clutter. A beautiful Calendar view to manage daily entries in one master file",
+    "description": "All the calendar, none of the clutter. A beautiful Calendar view to manage daily entries in one master file.",
     "main": "main.js",
     "scripts": {
         "dev": "node esbuild.config.mjs",

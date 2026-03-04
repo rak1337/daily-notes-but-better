@@ -3,7 +3,7 @@ import esbuild from "esbuild";
 
 const prod = process.argv[2] === "production";
 
-esbuild.build({
+const buildOptions = {
     entryPoints: ["main.ts"],
     bundle: true,
     external: [
@@ -22,17 +22,18 @@ esbuild.build({
         "@lezer/lr",
     ],
     format: "cjs",
-    watch: !prod,
     target: "es2022",
     logLevel: "info",
     sourcemap: prod ? false : "inline",
     minify: prod,
     treeShaking: true,
     outfile: "main.js",
-}).then(() => {
-    console.log("Build successful.");
-    process.exit(0);
-}).catch((e) => {
-    console.error(e);
-    process.exit(1);
-});
+};
+
+if (prod) {
+    esbuild.build(buildOptions).catch(() => process.exit(1));
+} else {
+    esbuild.context(buildOptions).then((context) => {
+        context.watch();
+    }).catch(() => process.exit(1));
+}
