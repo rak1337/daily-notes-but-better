@@ -1,3 +1,4 @@
+/* global window */
 import { Plugin, TFile, Notice, MarkdownView, normalizePath, moment } from 'obsidian';
 import { DailyNotesButBetterSettings, DEFAULT_SETTINGS } from './types';
 import { DailyNotesButBetterSettingTab } from './settings';
@@ -31,7 +32,7 @@ export default class DailyNotesButBetterPlugin extends Plugin {
             await leaf.setViewState({ type: VIEW_TYPE_CALENDAR, active: true });
             const calendarLeaves = this.app.workspace.getLeavesOfType(VIEW_TYPE_CALENDAR);
             if (calendarLeaves.length > 0) {
-                this.app.workspace.revealLeaf(calendarLeaves[0]);
+                void this.app.workspace.revealLeaf(calendarLeaves[0]);
             }
         }
     }
@@ -40,6 +41,7 @@ export default class DailyNotesButBetterPlugin extends Plugin {
     }
 
     async loadSettings() {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
     }
 
