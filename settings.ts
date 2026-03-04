@@ -12,7 +12,7 @@ export class DailyNotesButBetterSettingTab extends PluginSettingTab {
     display(): void {
         const { containerEl } = this;
         containerEl.empty();
-        new Setting(containerEl).setName('Daily notes but better settings').setHeading();
+        new Setting(containerEl).setName('General').setHeading();
 
         new Setting(containerEl)
             .setName('Log mode')
@@ -29,13 +29,13 @@ export class DailyNotesButBetterSettingTab extends PluginSettingTab {
             );
 
         if (this.plugin.settings.logMode === 'single') {
-            new Setting(containerEl).setName('Single master file settings').setHeading();
+            new Setting(containerEl).setName('Single master file').setHeading();
 
             new Setting(containerEl)
                 .setName('Target master file path')
                 .setDesc('Path to the single master file (e.g. 02 Personal/Log/Daily Log.md)')
                 .addText(text => text
-                    .setPlaceholder('02 Personal/Log/Daily Log.md')
+                    .setPlaceholder('path/to/daily-log.md')
                     .setValue(this.plugin.settings.targetFilePath)
                     .onChange(async (value) => {
                         this.plugin.settings.targetFilePath = value;
@@ -57,20 +57,20 @@ export class DailyNotesButBetterSettingTab extends PluginSettingTab {
                 .setName('Template file path')
                 .setDesc('Optional template to duplicate under the new header when inserted')
                 .addText(text => text
-                    .setPlaceholder('02 Personal/Templates/Daily.md')
+                    .setPlaceholder('path/to/template.md')
                     .setValue(this.plugin.settings.multiModeTemplate)
                     .onChange(async (value) => {
                         this.plugin.settings.multiModeTemplate = value;
                         await this.plugin.saveSettings();
                     }));
         } else {
-            new Setting(containerEl).setName('One file per day settings').setHeading();
+            new Setting(containerEl).setName('One file per day').setHeading();
 
             new Setting(containerEl)
                 .setName('Daily logs folder')
                 .setDesc('Folder where daily files are created')
                 .addText(text => text
-                    .setPlaceholder('02 Personal/Log')
+                    .setPlaceholder('path/to/folder')
                     .setValue(this.plugin.settings.multiModeFolder)
                     .onChange(async (value) => {
                         this.plugin.settings.multiModeFolder = value;
@@ -92,7 +92,7 @@ export class DailyNotesButBetterSettingTab extends PluginSettingTab {
                 .setName('Template file path')
                 .setDesc('Path to the template for new daily notes')
                 .addText(text => text
-                    .setPlaceholder('02 Personal/Templates/Daily.md')
+                    .setPlaceholder('path/to/template.md')
                     .setValue(this.plugin.settings.multiModeTemplate)
                     .onChange(async (value) => {
                         this.plugin.settings.multiModeTemplate = value;

@@ -19,7 +19,7 @@ export class CalendarView extends ItemView {
     }
 
     getDisplayText() {
-        return "Daily Notes But Better Calendar";
+        return "Daily notes but better calendar";
     }
 
     getIcon() {
@@ -31,13 +31,17 @@ export class CalendarView extends ItemView {
         this.renderCalendar();
 
         // Listen for file changes so dots update automatically
-        this.registerEvent(this.app.metadataCache.on('changed', async (file) => {
+        this.registerEvent(this.app.metadataCache.on('changed', (file) => {
             if (this.plugin.settings.logMode === 'single' && file.path === normalizePath(this.plugin.settings.targetFilePath)) {
-                await this.refreshExistingDates();
-                this.renderCalendar();
+                void (async () => {
+                    await this.refreshExistingDates();
+                    this.renderCalendar();
+                })();
             } else if (this.plugin.settings.logMode === 'multi' && file.path.startsWith(normalizePath(this.plugin.settings.multiModeFolder))) {
-                await this.refreshExistingDates();
-                this.renderCalendar();
+                void (async () => {
+                    await this.refreshExistingDates();
+                    this.renderCalendar();
+                })();
             }
         }));
     }
