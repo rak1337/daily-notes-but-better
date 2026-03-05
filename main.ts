@@ -42,7 +42,7 @@ export default class DailyNotesButBetterPlugin extends Plugin {
 
     async loadSettings() {
         const loadedData = (await this.loadData()) as unknown;
-        this.settings = Object.assign({}, DEFAULT_SETTINGS, loadedData as Partial<DailyNotesButBetterSettings>);
+        this.settings = { ...DEFAULT_SETTINGS, ...(loadedData as Partial<DailyNotesButBetterSettings>) };
     }
 
     async saveSettings() {
@@ -50,9 +50,11 @@ export default class DailyNotesButBetterPlugin extends Plugin {
         // Refresh calendar view if settings change
         const leaves = this.app.workspace.getLeavesOfType(VIEW_TYPE_CALENDAR);
         if (leaves.length > 0) {
-            const view = leaves[0].view as CalendarView;
-            await view.refreshExistingDates();
-            view.renderCalendar();
+            const view = leaves[0].view;
+            if (view instanceof CalendarView) {
+                await view.refreshExistingDates();
+                view.renderCalendar();
+            }
         }
     }
 
