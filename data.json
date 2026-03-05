@@ -4,5 +4,5 @@
   "dateFormat": "YYYY-MM-DD - dddd, MMMM D, YYYY",
   "multiModeFolder": "02 Personal/Log",
   "multiModeFormat": "YYYY-MM-DD",
-  "multiModeTemplate": ""
+  "multiModeTemplate": "02 Personal/Templates/Daily Journal Template"
 }

@@ -47,8 +47,8 @@ export class DailyNotesButBetterSettingTab extends PluginSettingTab {
                 .setName('Header date format')
                 .setDesc('Moment format for injected header strings')
                 .addText(text => {
-                    // eslint-disable-next-line obsidianmd/ui/sentence-case
-                    text.setPlaceholder('YYYY-MM-DD - dddd, MMMM D, YYYY');
+                    const formatPlaceholder = 'YYYY-MM-DD - dddd, MMMM D, YYYY';
+                    text.setPlaceholder(formatPlaceholder);
                     text.setValue(this.plugin.settings.dateFormat)
                         .onChange(async (value) => {
                             this.plugin.settings.dateFormat = value;
@@ -85,13 +85,13 @@ export class DailyNotesButBetterSettingTab extends PluginSettingTab {
                     return text;
                 });
 
+            const multiModeDesc = 'Moment format for the file name (e.g. YYYY-MM-DD)';
             new Setting(containerEl)
                 .setName('Daily note file format')
-                // eslint-disable-next-line obsidianmd/ui/sentence-case
-                .setDesc('Moment format for the file name (e.g. YYYY-MM-DD)')
+                .setDesc(multiModeDesc)
                 .addText(text => {
-                    // eslint-disable-next-line obsidianmd/ui/sentence-case
-                    text.setPlaceholder('YYYY-MM-DD');
+                    const multiModePlaceholder = 'YYYY-MM-DD';
+                    text.setPlaceholder(multiModePlaceholder);
                     text.setValue(this.plugin.settings.multiModeFormat)
                         .onChange(async (value) => {
                             this.plugin.settings.multiModeFormat = value;

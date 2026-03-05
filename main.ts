@@ -41,7 +41,6 @@ export default class DailyNotesButBetterPlugin extends Plugin {
     }
 
     async loadSettings() {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
     }
 
