@@ -25,6 +25,9 @@ export default defineConfig([
       parserOptions: {
         project: "./tsconfig.json",
       },
+      globals: {
+        window: "readonly",
+      },
     },
     plugins: {
       "@typescript-eslint": tsPlugin,

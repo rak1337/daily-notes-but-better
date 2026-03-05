@@ -1,4 +1,3 @@
-/* global window */
 import { ItemView, WorkspaceLeaf, TFile, TFolder, normalizePath, moment } from 'obsidian';
 import DailyNotesButBetterPlugin from './main';
 

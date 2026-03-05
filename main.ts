@@ -1,4 +1,3 @@
-/* global window */
 import { Plugin, TFile, Notice, MarkdownView, normalizePath, moment } from 'obsidian';
 import { DailyNotesButBetterSettings, DEFAULT_SETTINGS } from './types';
 import { DailyNotesButBetterSettingTab } from './settings';
