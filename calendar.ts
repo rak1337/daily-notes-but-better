@@ -1,5 +1,6 @@
 import { ItemView, WorkspaceLeaf, TFile, TFolder, normalizePath, moment } from 'obsidian';
 import DailyNotesButBetterPlugin from './main';
+import { parseLogHeader } from './date-utils';
 
 export const VIEW_TYPE_CALENDAR = "daily-notes-but-better-view";
 
@@ -54,11 +55,11 @@ export class CalendarView extends ItemView {
             const abstractFile = this.app.vault.getAbstractFileByPath(filePath);
             if (abstractFile instanceof TFile) {
                 const content = await this.app.vault.read(abstractFile);
-                // Extract all headers matching YYYY-MM-DD
-                const regex = /^## (\d{4}-\d{2}-\d{2})/gm;
-                let match;
-                while ((match = regex.exec(content)) !== null) {
-                    this.existingDates.add(match[1]);
+                for (const line of content.split('\n')) {
+                    const date = parseLogHeader(line, this.plugin.settings.dateFormat);
+                    if (date) {
+                        this.existingDates.add(date);
+                    }
                 }
             }
         } else {
