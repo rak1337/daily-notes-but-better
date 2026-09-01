@@ -57,3 +57,16 @@ Go to the plugin's Options. You will see a **Log Mode** dropdown:
 - Set the `Multi-mode Date Format` (e.g., `YYYY-MM-DD`) which is used for the filenames.
 
 ...happy logging
+
+## Development
+
+This repository keeps the generated `main.js` file so the plugin can be installed
+directly from a release or clone. Dependencies are deliberately not committed.
+
+```bash
+npm ci
+npm run lint
+npm run build
+```
+
+Use `npm run dev` while developing to rebuild the plugin when source files change.
