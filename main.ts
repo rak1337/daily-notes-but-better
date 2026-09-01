@@ -2,6 +2,7 @@ import { Plugin, TFile, Notice, MarkdownView, normalizePath, moment } from 'obsi
 import { DailyNotesButBetterSettings, DEFAULT_SETTINGS } from './types';
 import { DailyNotesButBetterSettingTab } from './settings';
 import { CalendarView, VIEW_TYPE_CALENDAR } from './calendar';
+import { parseLogHeader } from './date-utils';
 
 export default class DailyNotesButBetterPlugin extends Plugin {
     settings!: DailyNotesButBetterSettings;
@@ -133,7 +134,7 @@ export default class DailyNotesButBetterPlugin extends Plugin {
         let targetObjLine = -1;
 
         for (let i = 0; i < lines.length; i++) {
-            if (lines[i].startsWith(`## ${dateStr}`)) {
+            if (parseLogHeader(lines[i], this.settings.dateFormat) === dateStr) {
                 targetObjLine = i;
                 break;
             }
@@ -147,11 +148,10 @@ export default class DailyNotesButBetterPlugin extends Plugin {
             const dateVal = dateObj.valueOf();
 
             for (let i = 0; i < lines.length; i++) {
-                const match = lines[i].match(/^## (\d{4}-\d{2}-\d{2})/);
-                if (match) {
+                const headerDate = parseLogHeader(lines[i], this.settings.dateFormat);
+                if (headerDate) {
                     fileHasHeaders = true;
-                    const headerDate = window.moment(match[1], "YYYY-MM-DD");
-                    if (headerDate.valueOf() < dateVal) {
+                    if (window.moment(headerDate, 'YYYY-MM-DD').valueOf() < dateVal) {
                         insertLine = i;
                         break;
                     }

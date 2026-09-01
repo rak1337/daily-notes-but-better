@@ -48,7 +48,7 @@ Go to the plugin's Options. You will see a **Log Mode** dropdown:
 
 ### Mode 1: Single Master File (Default)
 - Set your `Target Master File Path` to your chosen unified markdown file (e.g., `Log/Daily Log.md`).
-- Define the `Date Format` for the headers injected into your master file.
+- Define the `Date Format` for the headers injected into your master file. The calendar recognizes existing headings using this same format, so formats such as `dddd, MMMM D, YYYY` work as well as the default ISO-style format.
 - Set a Template path if you want specific content added when a new day is created.
 
 ### Mode 2: One File Per Day
