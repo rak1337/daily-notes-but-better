@@ -1,0 +1,5 @@
+node_modules/
+.obsidian/
+
+# Obsidian's local workspace and plugin data
+data.json
